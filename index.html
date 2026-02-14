@@ -7,33 +7,28 @@
   <style>
     body { font-family: 'Noto Sans HK', sans-serif; margin: 0; padding: 20px; background: #f0f8ff; text-align: center; }
     h1 { color: #0056b3; }
-    p { max-width: 800px; margin: 20px auto; }
-    #ca-embed-container { 
-      width: 100%; 
-      max-width: 800px; 
-      height: 600px; /* 必須加 height，否則空白 */
-      margin: 20px auto; 
-      border: 1px solid #ccc; 
-      border-radius: 10px; 
-      overflow: hidden; 
+    p { max-width: 800px; margin: 20px auto; line-height: 1.6; }
+    df-messenger { 
+      --df-messenger-bot-message: #dfefff; 
+      --df-messenger-user-message: #d3e3fd; 
+      --df-messenger-font-color: #000; 
+      z-index: 999; 
+      position: fixed; 
+      bottom: 16px; 
+      right: 16px; 
     }
   </style>
+  <link rel="stylesheet" href="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/themes/df-messenger-default.css">
+  <script src="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/df-messenger.js"></script>
 </head>
 <body>
   <h1>中風出院準備小助手</h1>
-  <p>適合病人或家屬使用，一齊做份出院檢查清單，評估日常活動、家居環境同照顧者支援，確保出院後安全同獨立😊</p>
-  <p>開始對話啦！</p>
-  <div id="ca-embed-container"></div>
+  <p>適合病人或家屬使用，一齊做份出院檢查清單，特別睇吓病人日常活動、屋企環境同照顧者支援，確保出院後安全同獨立😊</p>
+  <p>開始對話啦！點擊右下角聊天泡泡。</p>
 
-  <script src="https://conversational-agents.cloud.google.com/embed.js"></script>
-  <script>
-    window.caEmbed = window.caEmbed || function() { (window.caEmbed.q = window.caEmbed.q || []).push(arguments); };
-    caEmbed('init', {
-      agentId: '5901c859-3fbf-4597-b4a3-6ccbdafea105', // 確認最新 agent ID
-      region: 'asia-east2', // 低延遲香港用戶
-      theme: 'light' // 或 dark
-    });
-    caEmbed('render', document.getElementById('ca-embed-container'));
-  </script>
+  <df-messenger location="asia-northeast1" project-id="studious-ethos-482608-a1" agent-id="5901c859-3fbf-4597-b4a3-6ccbdafea105" language-code="zh-hk" max-query-length="-1">
+    <df-messenger-chat-bubble chat-title="CR"></df-messenger-chat-bubble>
+  </df-messenger>
+
 </body>
 </html>
