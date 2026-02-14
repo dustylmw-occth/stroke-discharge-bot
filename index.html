@@ -5,24 +5,32 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>中風出院準備小助手</title>
   <style>
-    body { font-family: 'Noto Sans HK', sans-serif; margin: 20px; background: #f0f8ff; }
-    h1 { color: #0056b3; text-align: center; }
-    p { max-width: 800px; margin: 0 auto; text-align: center; }
-    #ca-embed-container { max-width: 800px; margin: 20px auto; height: 600px; border: 1px solid #ccc; border-radius: 10px; }
+    body { font-family: 'Noto Sans HK', sans-serif; margin: 0; padding: 20px; background: #f0f8ff; text-align: center; }
+    h1 { color: #0056b3; }
+    p { max-width: 800px; margin: 20px auto; }
+    #ca-embed-container { 
+      width: 100%; 
+      max-width: 800px; 
+      height: 600px; /* 必須加 height，否則空白 */
+      margin: 20px auto; 
+      border: 1px solid #ccc; 
+      border-radius: 10px; 
+      overflow: hidden; 
+    }
   </style>
 </head>
 <body>
   <h1>中風出院準備小助手</h1>
-  <p>適合病人或家屬使用，一齊做份出院檢查清單，評估日常活動、家居環境同照顧者支援，確保出院後安全。</p>
-  <p>開始對話啦😊</p>
+  <p>適合病人或家屬使用，一齊做份出院檢查清單，評估日常活動、家居環境同照顧者支援，確保出院後安全同獨立😊</p>
+  <p>開始對話啦！</p>
   <div id="ca-embed-container"></div>
 
   <script src="https://conversational-agents.cloud.google.com/embed.js"></script>
   <script>
     window.caEmbed = window.caEmbed || function() { (window.caEmbed.q = window.caEmbed.q || []).push(arguments); };
     caEmbed('init', {
-      agentId: '你 agent ID (長串，從 console 抄)',
-      region: 'asia-east2', // 低延遲
+      agentId: '5901c859-3fbf-4597-b4a3-6ccbdafea105', // 確認最新 agent ID
+      region: 'asia-east2', // 低延遲香港用戶
       theme: 'light' // 或 dark
     });
     caEmbed('render', document.getElementById('ca-embed-container'));
