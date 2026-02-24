@@ -1,66 +1,88 @@
-<!-- 中風出院準備小助手 - 網站嵌入代碼 -->
-<link rel="stylesheet" href="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/themes/df-messenger-default.css">
-
-<script src="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/df-messenger.js"></script>
-
-<df-messenger
-  location="asia-northeast1"
-  project-id="studious-ethos-482608-a1"
-  agent-id="5901c859-3fbf-4597-b4a3-6ccbdafea105"
-  language-code="zh-hk"
-  max-query-length="-1">
-  
-  <df-messenger-chat-bubble
-    chat-title="中風出院準備小助手">
-  </df-messenger-chat-bubble>
-  
-</df-messenger>
-
-<style>
-  df-messenger {
-    z-index: 9999;                    /* 確保浮在最上層 */
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    width: 380px;                     /* 適合電腦 + 平板 */
-    --df-messenger-font-family: "Noto Sans HK", system-ui, sans-serif;
-    --df-messenger-font-color: #1f2937;
-    --df-messenger-chat-background: #f8fafc;
-    --df-messenger-message-user-background: #3b82f6;
-    --df-messenger-message-user-color: #ffffff;
-    --df-messenger-message-bot-background: #ffffff;
-    --df-messenger-chat-bubble-background: #1e40af;   /* 深藍色，專業醫療感 */
-    --df-messenger-chat-bubble-color: #ffffff;
-  }
-
-  /* 長者友好：較大字體 */
-  @media (max-width: 768px) {
-    df-messenger {
-      width: 340px;
-      bottom: 16px;
-      right: 16px;
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>中風出院準備小助手</title>
+  <link rel="stylesheet" href="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/themes/df-messenger-default.css">
+  <script src="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/df-messenger.js"></script>
+  <style>
+    body {
+      font-family: "Noto Sans HK", system-ui, sans-serif;
+      background: #f8fafc;
+      margin: 0;
+      padding: 20px;
+      color: #1f2937;
+      line-height: 1.6;
     }
-  }
+    .container {
+      max-width: 700px;
+      margin: 40px auto;
+      text-align: center;
+      background: white;
+      padding: 40px 20px;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    }
+    h1 {
+      font-size: 28px;
+      color: #1e40af;
+      margin-bottom: 10px;
+    }
+    p {
+      font-size: 18px;
+      margin: 15px 0;
+    }
+    .highlight {
+      background: #dbeafe;
+      padding: 20px;
+      border-radius: 12px;
+      font-size: 17px;
+      margin: 25px 0;
+    }
+    df-messenger {
+      z-index: 9999;
+      --df-messenger-font-family: "Noto Sans HK", system-ui, sans-serif;
+      --df-messenger-chat-bubble-background: #1e40af;
+      --df-messenger-chat-bubble-color: white;
+    }
+    .privacy {
+      margin-top: 40px;
+      font-size: 13px;
+      color: #64748b;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>中風出院準備小助手</h1>
+    <p>歡迎使用！我是專為中風病人同家屬設計嘅小助手😊</p>
+    
+    <div class="highlight">
+      我會一步一步問你 16 條問題，幫你完成出院檢查清單。<br>
+      完成後會自動生成個人化建議，並發電郵總結畀你或照顧者。
+    </div>
 
-  /* 隱私提示（醫療網站必備） */
-  .privacy-notice {
-    position: fixed;
-    bottom: 90px;
-    right: 20px;
-    font-size: 12px;
-    color: #64748b;
-    background: rgba(255,255,255,0.95);
-    padding: 8px 12px;
-    border-radius: 6px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    z-index: 9998;
-    max-width: 280px;
-    line-height: 1.4;
-  }
-</style>
+    <p><strong>請直接開始對話</strong>（聊天窗會自動彈出）</p>
+  </div>
 
-<!-- 隱私提示（香港 PDPO 合規） -->
-<div class="privacy-notice">
-  本聊天機械人只用於出院準備檢查清單，資料只作今次用途。<br>
-  如有擔心，請聯絡你的職業治療師。
-</div>
+  <!-- 自動開啟聊天機械人 -->
+  <df-messenger
+    location="asia-northeast1"
+    project-id="studious-ethos-482608-a1"
+    agent-id="5901c859-3fbf-4597-b4a3-6ccbdafea105"
+    language-code="zh-hk"
+    max-query-length="-1"
+    open="true">   <!-- ← 呢個令佢自動開啟 -->
+    
+    <df-messenger-chat-bubble
+      chat-title="中風出院準備小助手">
+    </df-messenger-chat-bubble>
+  </df-messenger>
+
+  <div class="privacy">
+    本聊天機械人只用於出院準備檢查清單，資料只作今次用途。<br>
+    如有任何擔心，請聯絡你的職業治療師。
+  </div>
+</body>
+</html>
