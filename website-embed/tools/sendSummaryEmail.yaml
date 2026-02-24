@@ -1,0 +1,40 @@
+openapi: 3.0.0
+info:
+  title: Stroke Discharge Email Sender
+  version: 1.0.0
+  description: 發送中風出院準備檢查清單總結電郵（固定發去Lok電郵）
+paths:
+  /sendSummaryEmail:
+    post:
+      operationId: sendSummaryEmail
+      summary: 發送總結電郵
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                summary:
+                  type: string
+                  description: 完整總結文字（粵語，含 <br> 換行 + **粗體** + Google圖片 link）
+              required:
+                - summary
+      responses:
+        '200':
+          description: 成功發送
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+        '400':
+          description: 無 summary
+        '500':
+          description: 內部錯誤
+servers:
+  - url: https://stroke-discharge-email-sender-476567497440.asia-east2.run.app
