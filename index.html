@@ -14,47 +14,49 @@
       padding: 20px;
     }
     .main-container {
-      max-width: 860px;
-      margin: 30px auto;
+      max-width: 900px;
+      margin: 40px auto;
       background: white;
-      border-radius: 20px;
-      box-shadow: 0 15px 50px rgba(0,0,0,0.12);
+      border-radius: 24px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.12);
       overflow: hidden;
     }
     .header {
       background: linear-gradient(135deg, #1e40af, #3b82f6);
       color: white;
-      padding: 45px 30px;
+      padding: 50px 30px;
       text-align: center;
     }
     h1 {
-      font-size: 34px;
-      margin: 0 0 15px 0;
+      font-size: 36px;
+      margin: 0 0 12px 0;
     }
     .subtitle {
-      font-size: 20px;
+      font-size: 21px;
       opacity: 0.95;
     }
-    .chat-area {
-      padding: 25px;
+    .chat-container {
+      padding: 30px;
       background: #ffffff;
     }
     df-messenger {
       width: 100% !important;
-      height: 680px !important;
+      height: 720px !important;     /* 大聊天框 */
       border: none;
       border-radius: 16px;
-      box-shadow: 0 5px 25px rgba(0,0,0,0.08);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
       --df-messenger-font-family: "Noto Sans HK", system-ui, sans-serif;
     }
-    /* 徹底隱藏所有泡泡 */
+    /* 徹底隱藏所有泡泡/圖標 */
     df-messenger::part(chat-bubble),
-    df-messenger [data-part="chat-bubble"] {
+    df-messenger [data-part="chat-bubble"],
+    df-messenger .chat-bubble {
       display: none !important;
+      visibility: hidden !important;
     }
     .privacy {
       text-align: center;
-      margin-top: 30px;
+      margin-top: 40px;
       font-size: 14px;
       color: #64748b;
       line-height: 1.6;
@@ -68,12 +70,12 @@
       <p class="subtitle">專為中風病人及家屬而設 😊</p>
     </div>
     
-    <div class="chat-area">
-      <p style="text-align:center; font-size:19px; color:#1f2937; margin-bottom:20px;">
+    <div class="chat-container">
+      <p style="text-align:center; font-size:20px; margin-bottom:25px; color:#1f2937;">
         請直接喺下面對話，我會一步一步幫你完成出院檢查清單
       </p>
       
-      <!-- 直接嵌入聊天窗，無泡泡 -->
+      <!-- 純聊天框，無任何泡泡 -->
       <df-messenger
         location="asia-northeast1"
         project-id="studious-ethos-482608-a1"
@@ -90,13 +92,16 @@
     如有任何擔心，請聯絡你的職業治療師。
   </div>
 
-  <!-- 確保自動開啟 -->
+  <!-- 強制自動完全打開 -->
   <script>
     window.addEventListener('load', function() {
       setTimeout(() => {
         const messenger = document.querySelector('df-messenger');
-        if (messenger) messenger.open();
-      }, 800);
+        if (messenger) {
+          messenger.open();        // 強制打開
+          messenger.shadowRoot.querySelectorAll('chat-bubble').forEach(el => el.style.display = 'none');
+        }
+      }, 1000);
     });
   </script>
 </body>
