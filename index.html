@@ -1,34 +1,66 @@
-<!DOCTYPE html>
-<html lang="zh-HK">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>中風出院準備小助手</title>
-  <style>
-    body { font-family: 'Noto Sans HK', sans-serif; margin: 0; padding: 20px; background: #f0f8ff; text-align: center; }
-    h1 { color: #0056b3; }
-    p { max-width: 800px; margin: 20px auto; line-height: 1.6; }
-    df-messenger { 
-      --df-messenger-bot-message: #dfefff; 
-      --df-messenger-user-message: #d3e3fd; 
-      --df-messenger-font-color: #000; 
-      z-index: 999; 
-      position: fixed; 
-      bottom: 16px; 
-      right: 16px; 
+<!-- 中風出院準備小助手 - 網站嵌入代碼 -->
+<link rel="stylesheet" href="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/themes/df-messenger-default.css">
+
+<script src="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/df-messenger.js"></script>
+
+<df-messenger
+  location="asia-northeast1"
+  project-id="studious-ethos-482608-a1"
+  agent-id="5901c859-3fbf-4597-b4a3-6ccbdafea105"
+  language-code="zh-hk"
+  max-query-length="-1">
+  
+  <df-messenger-chat-bubble
+    chat-title="中風出院準備小助手">
+  </df-messenger-chat-bubble>
+  
+</df-messenger>
+
+<style>
+  df-messenger {
+    z-index: 9999;                    /* 確保浮在最上層 */
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 380px;                     /* 適合電腦 + 平板 */
+    --df-messenger-font-family: "Noto Sans HK", system-ui, sans-serif;
+    --df-messenger-font-color: #1f2937;
+    --df-messenger-chat-background: #f8fafc;
+    --df-messenger-message-user-background: #3b82f6;
+    --df-messenger-message-user-color: #ffffff;
+    --df-messenger-message-bot-background: #ffffff;
+    --df-messenger-chat-bubble-background: #1e40af;   /* 深藍色，專業醫療感 */
+    --df-messenger-chat-bubble-color: #ffffff;
+  }
+
+  /* 長者友好：較大字體 */
+  @media (max-width: 768px) {
+    df-messenger {
+      width: 340px;
+      bottom: 16px;
+      right: 16px;
     }
-  </style>
-  <link rel="stylesheet" href="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/themes/df-messenger-default.css">
-  <script src="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/df-messenger.js"></script>
-</head>
-<body>
-  <h1>中風出院準備小助手</h1>
-  <p>適合病人或家屬使用，一齊做份出院檢查清單，特別睇吓病人日常活動、屋企環境同照顧者支援，確保出院後安全同獨立😊</p>
-  <p>開始對話啦！點擊右下角聊天泡泡。</p>
+  }
 
-  <df-messenger location="asia-northeast1" project-id="studious-ethos-482608-a1" agent-id="5901c859-3fbf-4597-b4a3-6ccbdafea105" language-code="zh-hk" max-query-length="-1">
-    <df-messenger-chat-bubble chat-title="CR"></df-messenger-chat-bubble>
-  </df-messenger>
+  /* 隱私提示（醫療網站必備） */
+  .privacy-notice {
+    position: fixed;
+    bottom: 90px;
+    right: 20px;
+    font-size: 12px;
+    color: #64748b;
+    background: rgba(255,255,255,0.95);
+    padding: 8px 12px;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    z-index: 9998;
+    max-width: 280px;
+    line-height: 1.4;
+  }
+</style>
 
-</body>
-</html>
+<!-- 隱私提示（香港 PDPO 合規） -->
+<div class="privacy-notice">
+  本聊天機械人只用於出院準備檢查清單，資料只作今次用途。<br>
+  如有擔心，請聯絡你的職業治療師。
+</div>
