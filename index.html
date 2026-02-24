@@ -12,77 +12,92 @@
       background: #f8fafc;
       margin: 0;
       padding: 20px;
-      color: #1f2937;
-      line-height: 1.6;
     }
-    .container {
-      max-width: 700px;
-      margin: 40px auto;
-      text-align: center;
+    .main-container {
+      max-width: 860px;
+      margin: 30px auto;
       background: white;
-      padding: 40px 20px;
-      border-radius: 16px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+      border-radius: 20px;
+      box-shadow: 0 15px 50px rgba(0,0,0,0.12);
+      overflow: hidden;
+    }
+    .header {
+      background: linear-gradient(135deg, #1e40af, #3b82f6);
+      color: white;
+      padding: 45px 30px;
+      text-align: center;
     }
     h1 {
-      font-size: 28px;
-      color: #1e40af;
-      margin-bottom: 10px;
+      font-size: 34px;
+      margin: 0 0 15px 0;
     }
-    p {
-      font-size: 18px;
-      margin: 15px 0;
+    .subtitle {
+      font-size: 20px;
+      opacity: 0.95;
     }
-    .highlight {
-      background: #dbeafe;
-      padding: 20px;
-      border-radius: 12px;
-      font-size: 17px;
-      margin: 25px 0;
+    .chat-area {
+      padding: 25px;
+      background: #ffffff;
     }
     df-messenger {
-      z-index: 9999;
+      width: 100% !important;
+      height: 680px !important;
+      border: none;
+      border-radius: 16px;
+      box-shadow: 0 5px 25px rgba(0,0,0,0.08);
       --df-messenger-font-family: "Noto Sans HK", system-ui, sans-serif;
-      --df-messenger-chat-bubble-background: #1e40af;
-      --df-messenger-chat-bubble-color: white;
+    }
+    /* 徹底隱藏所有泡泡 */
+    df-messenger::part(chat-bubble),
+    df-messenger [data-part="chat-bubble"] {
+      display: none !important;
     }
     .privacy {
-      margin-top: 40px;
-      font-size: 13px;
+      text-align: center;
+      margin-top: 30px;
+      font-size: 14px;
       color: #64748b;
+      line-height: 1.6;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>中風出院準備小助手</h1>
-    <p>歡迎使用！我是專為中風病人同家屬設計嘅小助手😊</p>
-    
-    <div class="highlight">
-      我會一步一步問你 16 條問題，幫你完成出院檢查清單。<br>
-      完成後會自動生成個人化建議，並發電郵總結畀你或照顧者。
+  <div class="main-container">
+    <div class="header">
+      <h1>中風出院準備小助手</h1>
+      <p class="subtitle">專為中風病人及家屬而設 😊</p>
     </div>
-
-    <p><strong>請直接開始對話</strong>（聊天窗會自動彈出）</p>
-  </div>
-
-  <!-- 自動開啟聊天機械人 -->
-  <df-messenger
-    location="asia-northeast1"
-    project-id="studious-ethos-482608-a1"
-    agent-id="5901c859-3fbf-4597-b4a3-6ccbdafea105"
-    language-code="zh-hk"
-    max-query-length="-1"
-    open="true">   <!-- ← 呢個令佢自動開啟 -->
     
-    <df-messenger-chat-bubble
-      chat-title="中風出院準備小助手">
-    </df-messenger-chat-bubble>
-  </df-messenger>
+    <div class="chat-area">
+      <p style="text-align:center; font-size:19px; color:#1f2937; margin-bottom:20px;">
+        請直接喺下面對話，我會一步一步幫你完成出院檢查清單
+      </p>
+      
+      <!-- 直接嵌入聊天窗，無泡泡 -->
+      <df-messenger
+        location="asia-northeast1"
+        project-id="studious-ethos-482608-a1"
+        agent-id="5901c859-3fbf-4597-b4a3-6ccbdafea105"
+        language-code="zh-hk"
+        max-query-length="-1"
+        open="true">
+      </df-messenger>
+    </div>
+  </div>
 
   <div class="privacy">
     本聊天機械人只用於出院準備檢查清單，資料只作今次用途。<br>
     如有任何擔心，請聯絡你的職業治療師。
   </div>
+
+  <!-- 確保自動開啟 -->
+  <script>
+    window.addEventListener('load', function() {
+      setTimeout(() => {
+        const messenger = document.querySelector('df-messenger');
+        if (messenger) messenger.open();
+      }, 800);
+    });
+  </script>
 </body>
 </html>
