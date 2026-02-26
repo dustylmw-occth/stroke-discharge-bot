@@ -40,15 +40,20 @@
     window.addEventListener('dfMessengerLoaded', function () {
       const dfMessenger = document.querySelector('df-messenger');
       
-      // 立即打開聊天窗
+      // 生成全新 session ID（每次打開連結都係新對話）
+      const newSessionId = 'session-' + Math.random().toString(36).substring(2) + Date.now();
+      dfMessenger.setAttribute('session-id', newSessionId);
+
+      // 強制重置對話 + 自動打開
+      dfMessenger.reset();
       dfMessenger.open();
 
-      // 自動觸發介紹訊息（無需用戶輸入）
+      // 自動觸發介紹訊息
       setTimeout(() => {
-        dfMessenger.sendQuery("開始");   // 觸發 agent 的開頭訊息
-      }, 800);
+        dfMessenger.sendQuery("開始");
+      }, 900);
 
-      // 調整輸入框大小（適合長者）
+      // 長者友好輸入框
       const chatElement = dfMessenger.shadowRoot.querySelector('df-messenger-chat');
       if (chatElement) {
         const userInput = chatElement.shadowRoot.querySelector('df-messenger-user-input');
