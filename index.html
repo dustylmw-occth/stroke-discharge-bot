@@ -40,10 +40,15 @@
     window.addEventListener('dfMessengerLoaded', function () {
       const dfMessenger = document.querySelector('df-messenger');
       
-      // 強制立即打開聊天窗
+      // 立即打開聊天窗
       dfMessenger.open();
-      
-      // 調整輸入框字體大小（適合長者）
+
+      // 自動觸發介紹訊息（無需用戶輸入）
+      setTimeout(() => {
+        dfMessenger.sendQuery("開始");   // 觸發 agent 的開頭訊息
+      }, 800);
+
+      // 調整輸入框大小（適合長者）
       const chatElement = dfMessenger.shadowRoot.querySelector('df-messenger-chat');
       if (chatElement) {
         const userInput = chatElement.shadowRoot.querySelector('df-messenger-user-input');
@@ -58,8 +63,8 @@
     });
   </script>
 
-  <!-- 隱私提示（放在最底） -->
-  <div style="text-align:center; margin-top:20px; font-size:14px; color:#64748b; padding:0 20px;">
+  <!-- 隱私提示 -->
+  <div style="text-align:center; margin-top:25px; font-size:14px; color:#64748b; padding:0 20px;">
     本聊天機械人只用於出院準備檢查清單，資料只作今次用途。<br>
     如有任何擔心，請聯絡你的職業治療師。
   </div>
