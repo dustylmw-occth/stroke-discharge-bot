@@ -31,7 +31,7 @@
     agent-id="5901c859-3fbf-4597-b4a3-6ccbdafea105"
     language-code="zh-hk"
     max-query-length="-1"
-    chat-title="中風出院準備小助手"
+    chat-title="中風病人出院準備小助手"   <!-- ← 改咗呢度 -->
     expand> 
     <df-messenger-chat></df-messenger-chat>
   </df-messenger>
@@ -40,18 +40,17 @@
     window.addEventListener('dfMessengerLoaded', function () {
       const dfMessenger = document.querySelector('df-messenger');
       
-      // 生成全新 session ID（每次打開連結都係新對話）
+      // 每次打開都係全新對話
       const newSessionId = 'session-' + Math.random().toString(36).substring(2) + Date.now();
       dfMessenger.setAttribute('session-id', newSessionId);
 
-      // 強制重置對話 + 自動打開
       dfMessenger.reset();
       dfMessenger.open();
 
-      // 自動觸發介紹訊息
+      // 自動顯示介紹訊息
       setTimeout(() => {
         dfMessenger.sendQuery("開始");
-      }, 900);
+      }, 800);
 
       // 長者友好輸入框
       const chatElement = dfMessenger.shadowRoot.querySelector('df-messenger-chat');
