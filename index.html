@@ -11,9 +11,10 @@
       margin: 0; 
       padding: 0; 
       height: 100vh; 
-      background: #f8fafc;           /* 長者友好柔和背景 */
+      background: #f8fafc; 
       font-family: "Noto Sans HK", system-ui, sans-serif;
     }
+
     df-messenger {
       --df-messenger-font-color: #1e2937;
       --df-messenger-font-family: "Noto Sans HK", system-ui, sans-serif;
@@ -21,6 +22,26 @@
       --df-messenger-message-user-background: #3b82f6;
       --df-messenger-message-user-color: #ffffff;
       --df-messenger-message-bot-background: #ffffff;
+      width: 100% !important;
+      height: 85vh !important;
+    }
+
+    /* 長者友好：為所有訊息加上清晰邊框 */
+    df-messenger::part(message),
+    df-messenger .message,
+    df-messenger df-messenger-message {
+      border: 2px solid #cbd5e1 !important;
+      border-radius: 16px !important;
+      padding: 14px 18px !important;
+      margin: 8px 0 !important;
+      font-size: 20px !important;        /* 大字體 */
+      line-height: 1.5 !important;
+    }
+
+    /* 用戶訊息用藍色邊框 */
+    df-messenger::part(user-message),
+    df-messenger .user-message {
+      border-color: #3b82f6 !important;
     }
   </style>
 </head>
@@ -31,8 +52,7 @@
     agent-id="5901c859-3fbf-4597-b4a3-6ccbdafea105"
     language-code="zh-hk"
     max-query-length="-1"
-    chat-title="中風病人出院準備小助手"
-    expand> 
+    chat-title="中風病人出院準備小助手">
     <df-messenger-chat></df-messenger-chat>
   </df-messenger>
 
@@ -54,7 +74,7 @@
     });
   </script>
 
-  <!-- 隱私提示（大字 + 高對比） -->
+  <!-- 隱私提示（大字） -->
   <div style="text-align:center; margin-top:30px; font-size:16px; color:#475569; line-height:1.6;">
     本聊天機械人只用於出院準備檢查清單，資料只作今次用途。<br>
     如有任何擔心，請聯絡你的職業治療師。
