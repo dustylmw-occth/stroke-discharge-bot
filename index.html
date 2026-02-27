@@ -31,8 +31,7 @@
     agent-id="5901c859-3fbf-4597-b4a3-6ccbdafea105"
     language-code="zh-hk"
     max-query-length="-1"
-    chat-title="中風病人出院準備小助手"   <!-- ← 改咗呢度 -->
-    expand> 
+    chat-title="職業治療智能支援助理">
     <df-messenger-chat></df-messenger-chat>
   </df-messenger>
 
@@ -40,7 +39,7 @@
     window.addEventListener('dfMessengerLoaded', function () {
       const dfMessenger = document.querySelector('df-messenger');
       
-      // 每次打開都係全新對話
+      // 每次打開連結都是全新對話
       const newSessionId = 'session-' + Math.random().toString(36).substring(2) + Date.now();
       dfMessenger.setAttribute('session-id', newSessionId);
 
