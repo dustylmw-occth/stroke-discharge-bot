@@ -5,13 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>職業治療智能支援助理</title>
   
+  <!-- 強制清快取（每次更新都會生效） -->
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+HK:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/themes/df-messenger-default.css">
-  <script src="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/df-messenger.js"></script>
+  <link rel="stylesheet" href="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/themes/df-messenger-default.css?v=20260302">
+  <script src="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/df-messenger.js?v=20260302"></script>
   
   <style>
-    * { box-sizing: border-box; }
-    
     body {
       margin: 0;
       padding: 0;
@@ -19,13 +18,14 @@
       background: #f8fafc;
       font-family: "Noto Sans HK", system-ui, sans-serif;
       overflow: hidden;
+      position: relative;
     }
     
     df-messenger {
       width: 100%;
-      height: calc(100vh - 110px);   /* 特別留 110px 空間給輸入框 + 隱私提示 */
+      height: calc(100vh - 125px);   /* 留出足夠空間給輸入框 + 隱私提示 */
       
-      /* 大字型 + 長者友好設計 */
+      /* 大字型 + 長者友好 */
       --df-messenger-font-size: 21px;
       --df-messenger-message-font-size: 21px;
       --df-messenger-titlebar-title-font-size: 24px;
@@ -51,7 +51,7 @@
       background: #f1f5f9;
       border-top: 1px solid #e2e8f0;
       text-align: center;
-      z-index: 1000;
+      z-index: 9999;
     }
   </style>
 </head>
@@ -62,15 +62,16 @@
     agent-id="5901c859-3fbf-4597-b4a3-6ccbdafea105"
     language-code="zh-hk"
     max-query-length="-1"
-    chat-title="職業治療智能支援助理"
     intent="WELCOME">
     
+    <!-- 標題放在這裡（官方推薦位置） -->
     <df-messenger-chat 
+      chat-title="職業治療智能支援助理"
       placeholder-text="請輸入您的回覆或按麥克風說話...">
     </df-messenger-chat>
   </df-messenger>
 
-  <!-- 隱私提示（永遠固定在最底） -->
+  <!-- 隱私提示 -->
   <div class="privacy-notice">
     本聊天機械人只用於出院準備檢查清單，資料只作今次用途。<br>
     如有任何擔心，請聯絡你的職業治療師。
@@ -79,26 +80,33 @@
   <script>
     window.addEventListener('dfMessengerLoaded', function () {
       const dfMessenger = document.querySelector('df-messenger');
-      
-      // 強制打開聊天窗
       dfMessenger.open();
 
-      // 強力強制標題（多次執行 + 觀察器）
-      const forceTitle = () => {
+      // 最激進的標題強制（5 次執行 + 持續監聽）
+      function forceTitle() {
         try {
-          const titleEl = dfMessenger.shadowRoot.querySelector('.df-messenger-titlebar-title');
+          // 方法1：直接改屬性
+          const chatEl = dfMessenger.querySelector('df-messenger-chat');
+          if (chatEl) chatEl.setAttribute('chat-title', '職業治療智能支援助理');
+
+          // 方法2：直接改 DOM 文字
+          const titleEl = dfMessenger.shadowRoot.querySelector('.df-messenger-titlebar-title, .title, h1');
           if (titleEl) titleEl.textContent = '職業治療智能支援助理';
         } catch(e) {}
-      };
+      }
 
       forceTitle();
-      setTimeout(forceTitle, 600);
-      setTimeout(forceTitle, 1500);
-      setTimeout(forceTitle, 3000);
+      setTimeout(forceTitle, 400);
+      setTimeout(forceTitle, 900);
+      setTimeout(forceTitle, 1600);
+      setTimeout(forceTitle, 2800);
+      setTimeout(forceTitle, 4500);
 
-      // 監聽任何變化，確保標題永遠正確
+      // 持續監聽任何變化
       const observer = new MutationObserver(forceTitle);
-      observer.observe(dfMessenger.shadowRoot, { childList: true, subtree: true });
+      if (dfMessenger.shadowRoot) {
+        observer.observe(dfMessenger.shadowRoot, { childList: true, subtree: true });
+      }
     });
   </script>
 </body>
