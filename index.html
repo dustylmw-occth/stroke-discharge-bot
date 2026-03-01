@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>中風出院準備小助手</title>
+  <title>職業治療智能支援助理</title>
   <link rel="stylesheet" href="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/themes/df-messenger-default.css">
   <script src="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/df-messenger.js"></script>
   <style>
@@ -14,7 +14,6 @@
       background: #f8fafc; 
       font-family: "Noto Sans HK", system-ui, sans-serif;
     }
-
     df-messenger {
       --df-messenger-font-color: #1e2937;
       --df-messenger-font-family: "Noto Sans HK", system-ui, sans-serif;
@@ -25,24 +24,6 @@
       width: 100% !important;
       height: 85vh !important;
     }
-
-    /* 長者友好：為所有訊息加上清晰邊框 */
-    df-messenger::part(message),
-    df-messenger .message,
-    df-messenger df-messenger-message {
-      border: 2px solid #cbd5e1 !important;
-      border-radius: 16px !important;
-      padding: 14px 18px !important;
-      margin: 8px 0 !important;
-      font-size: 20px !important;        /* 大字體 */
-      line-height: 1.5 !important;
-    }
-
-    /* 用戶訊息用藍色邊框 */
-    df-messenger::part(user-message),
-    df-messenger .user-message {
-      border-color: #3b82f6 !important;
-    }
   </style>
 </head>
 <body>
@@ -52,7 +33,7 @@
     agent-id="5901c859-3fbf-4597-b4a3-6ccbdafea105"
     language-code="zh-hk"
     max-query-length="-1"
-    chat-title="中風病人出院準備小助手">
+    chat-title="職業治療智能支援助理">
     <df-messenger-chat></df-messenger-chat>
   </df-messenger>
 
@@ -60,7 +41,7 @@
     window.addEventListener('dfMessengerLoaded', function () {
       const dfMessenger = document.querySelector('df-messenger');
       
-      // 每次打開都是全新對話
+      // 每次打開連結都是全新對話
       const newSessionId = 'session-' + Math.random().toString(36).substring(2) + Date.now();
       dfMessenger.setAttribute('session-id', newSessionId);
 
@@ -74,7 +55,7 @@
     });
   </script>
 
-  <!-- 隱私提示（大字） -->
+  <!-- 隱私提示 -->
   <div style="text-align:center; margin-top:30px; font-size:16px; color:#475569; line-height:1.6;">
     本聊天機械人只用於出院準備檢查清單，資料只作今次用途。<br>
     如有任何擔心，請聯絡你的職業治療師。
