@@ -4,8 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>職業治療智能支援助理</title>
+  
+  <!-- Load Noto Sans HK for consistent Chinese display -->
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+HK:wght@400;500;700&display=swap" rel="stylesheet">
+  
   <link rel="stylesheet" href="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/themes/df-messenger-default.css">
   <script src="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/df-messenger.js"></script>
+  
   <style>
     body {
       margin: 0;
@@ -13,20 +18,40 @@
       height: 100vh;
       background: #f8fafc;
       font-family: "Noto Sans HK", system-ui, sans-serif;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
     }
+    
     df-messenger {
-      --df-messenger-font-color: #000;
-      --df-messenger-font-family: "Noto Sans HK", system-ui, sans-serif;
-      --df-messenger-chat-background: #f0f4f8;
-      --df-messenger-message-user-background: #3b82f6;
-      --df-messenger-message-user-color: #ffffff;
-      --df-messenger-message-bot-background: #ffffff;
+      flex: 1;
+      width: 100%;
       
-      /* 大字型設定 — 非常適合長者 */
+      /* Senior-friendly big fonts */
+      --df-messenger-font-family: "Noto Sans HK", system-ui, sans-serif;
       --df-messenger-font-size: 21px;
       --df-messenger-message-font-size: 21px;
       --df-messenger-titlebar-title-font-size: 24px;
       --df-messenger-titlebar-height: 68px;
+      --df-messenger-titlebar-background: #3b82f6;
+      --df-messenger-titlebar-font-color: #ffffff;
+      
+      --df-messenger-chat-background: #f0f4f8;
+      --df-messenger-message-user-background: #3b82f6;
+      --df-messenger-message-user-color: #ffffff;
+      --df-messenger-message-bot-background: #ffffff;
+      --df-messenger-message-bot-font-color: #1f2937;
+    }
+    
+    .privacy-notice {
+      text-align: center;
+      padding: 16px 20px;
+      font-size: 16px;
+      line-height: 1.5;
+      color: #64748b;
+      background: #f1f5f9;
+      border-top: 1px solid #e2e8f0;
+      flex-shrink: 0;
     }
   </style>
 </head>
@@ -38,36 +63,33 @@
     language-code="zh-hk"
     max-query-length="-1"
     chat-title="職業治療智能支援助理"
-    intent="WELCOME"          <!-- 這一行最重要：自動觸發你的開啟訊息 -->
-    expand>
+    intent="WELCOME">
+    
     <df-messenger-chat 
       placeholder-text="請輸入您的回覆或按麥克風說話...">
     </df-messenger-chat>
   </df-messenger>
 
+  <!-- Privacy notice -->
+  <div class="privacy-notice">
+    本聊天機械人只用於出院準備檢查清單，資料只作今次用途。<br>
+    如有任何擔心，請聯絡你的職業治療師。
+  </div>
+
   <script>
     window.addEventListener('dfMessengerLoaded', function () {
       const dfMessenger = document.querySelector('df-messenger');
       
-      // 強制打開聊天窗
+      // Force open the chat
       dfMessenger.open();
       
-      // 額外保險：再觸發一次 WELCOME（如果有延遲）
+      // Extra safety: trigger welcome again after load
       setTimeout(() => {
         try {
           dfMessenger.sendEvent('WELCOME');
-          console.log('✅ WELCOME event 已發送');
-        } catch(e) {
-          console.log('⚠️ 直接使用 intent 屬性已足夠');
-        }
-      }, 1200);
+        } catch(e) {}
+      }, 800);
     });
   </script>
-
-  <!-- 隱私提示（大字一點） -->
-  <div style="text-align:center; margin-top:20px; font-size:16px; color:#64748b; padding:0 20px;">
-    本聊天機械人只用於出院準備檢查清單，資料只作今次用途。<br>
-    如有任何擔心，請聯絡你的職業治療師。
-  </div>
 </body>
 </html>
