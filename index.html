@@ -68,18 +68,15 @@
       placeholder-text="請輸入您的回覆或按麥克風說話...">
     </df-messenger-chat>
   </df-messenger>
-  
   <!-- 隱私提示 -->
   <div class="privacy-notice">
     本聊天機械人只用於出院準備檢查清單，資料只作今次用途。<br>
     如有任何擔心，請聯絡你的職業治療師。
   </div>
-
   <script>
     window.addEventListener('dfMessengerLoaded', function () {
       const dfMessenger = document.querySelector('df-messenger');
       dfMessenger.open();
-      
       // 強制設定標題 (最後保險)
       setTimeout(() => {
         try {
@@ -87,76 +84,6 @@
           if (titleEl) titleEl.textContent = '職業治療智能支援助理';
         } catch(e) {}
       }, 800);
-
-      // ==================== 加強版自動語音朗讀 (Auto Text-to-Speech) ====================
-      let ttsEnabled = true;
-
-      const speak = (text) => {
-        if (!ttsEnabled || !('speechSynthesis' in window) || !text || text.length < 10) return;
-        speechSynthesis.cancel();
-        const utterance = new SpeechSynthesisUtterance(text);
-        utterance.lang = 'zh-HK';
-        utterance.rate = 0.92;
-        utterance.pitch = 1.05;
-        speechSynthesis.speak(utterance);
-      };
-
-      // 第一次載入時測試語音（確認功能正常）
-      setTimeout(() => {
-        speak("語音功能已經開啟，機械人會自動朗讀每句說話。");
-      }, 1800);
-
-      // 更穩陣的監聽方式（雙重 shadowRoot + 後備輪詢）
-      let lastMessage = '';
-      const checkForNewMessages = () => {
-        try {
-          const chatShadow = dfMessenger.shadowRoot.querySelector('df-messenger-chat')?.shadowRoot;
-          if (!chatShadow) return;
-          
-          const messages = chatShadow.querySelectorAll('.bot-message, .message, df-messenger-message');
-          if (messages.length > 0) {
-            const latestText = messages[messages.length - 1].textContent.trim();
-            if (latestText && latestText !== lastMessage && latestText.length > 15) {
-              lastMessage = latestText;
-              speak(latestText);
-            }
-          }
-        } catch(e) {}
-      };
-
-      // 主監聽器
-      setTimeout(() => {
-        try {
-          const chatRoot = dfMessenger.shadowRoot.querySelector('df-messenger-chat').shadowRoot;
-          const observer = new MutationObserver(checkForNewMessages);
-          observer.observe(chatRoot, { childList: true, subtree: true });
-        } catch(e) {}
-      }, 1200);
-
-      // 後備輪詢（每 1.2 秒檢查一次，防止漏聽）
-      setInterval(checkForNewMessages, 1200);
-
-      // 右下角語音開關按鈕（更大、更明顯）
-      const toggleBtn = document.createElement('button');
-      toggleBtn.innerHTML = '🔊 語音朗讀開啟';
-      toggleBtn.style.position = 'fixed';
-      toggleBtn.style.bottom = '110px';
-      toggleBtn.style.right = '15px';
-      toggleBtn.style.zIndex = '10000';
-      toggleBtn.style.padding = '12px 20px';
-      toggleBtn.style.borderRadius = '30px';
-      toggleBtn.style.border = 'none';
-      toggleBtn.style.background = '#3b82f6';
-      toggleBtn.style.color = 'white';
-      toggleBtn.style.fontSize = '16px';
-      toggleBtn.style.fontWeight = '500';
-      toggleBtn.style.boxShadow = '0 4px 12px rgba(0,0,0,0.25)';
-      toggleBtn.onclick = () => {
-        ttsEnabled = !ttsEnabled;
-        toggleBtn.innerHTML = ttsEnabled ? '🔊 語音朗讀開啟' : '🔇 語音朗讀關閉';
-        toggleBtn.style.background = ttsEnabled ? '#3b82f6' : '#64748b';
-      };
-      document.body.appendChild(toggleBtn);
     });
   </script>
 </body>
