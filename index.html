@@ -5,10 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>職業治療智能支援助理</title>
   
-  <!-- Force fresh load every time (cache busting) -->
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+HK:wght@400;500;700&display=swap&v=20260301" rel="stylesheet">
-  <link rel="stylesheet" href="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/themes/df-messenger-default.css?v=20260301">
-  <script src="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/df-messenger.js?v=20260301"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+HK:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/themes/df-messenger-default.css">
+  <script src="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/df-messenger.js"></script>
   
   <style>
     body {
@@ -17,21 +16,18 @@
       height: 100vh;
       background: #f8fafc;
       font-family: "Noto Sans HK", system-ui, sans-serif;
-      display: flex;
-      flex-direction: column;
       overflow: hidden;
     }
     
     df-messenger {
-      flex: 1;
       width: 100%;
+      height: calc(100vh - 92px);   /* 給輸入框 + 隱私提示留空間 */
       
-      /* 大字型 + 藍色標題欄 (適合長者) */
-      --df-messenger-font-family: "Noto Sans HK", system-ui, sans-serif;
+      /* 大字型 + 適合長者設計 */
       --df-messenger-font-size: 21px;
       --df-messenger-message-font-size: 21px;
       --df-messenger-titlebar-title-font-size: 24px;
-      --df-messenger-titlebar-height: 68px;
+      --df-messenger-titlebar-height: 70px;
       --df-messenger-titlebar-background: #3b82f6;
       --df-messenger-titlebar-font-color: #ffffff;
       
@@ -42,14 +38,18 @@
     }
     
     .privacy-notice {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
       text-align: center;
-      padding: 16px 20px;
+      padding: 14px 20px;
       font-size: 16px;
       line-height: 1.5;
       color: #64748b;
       background: #f1f5f9;
       border-top: 1px solid #e2e8f0;
-      flex-shrink: 0;
+      z-index: 100;
     }
   </style>
 </head>
@@ -60,16 +60,15 @@
     agent-id="5901c859-3fbf-4597-b4a3-6ccbdafea105"
     language-code="zh-hk"
     max-query-length="-1"
+    chat-title="職業治療智能支援助理"
     intent="WELCOME">
     
-    <!-- ✅ chat-title 必須放在這裡 (2026 新規則) -->
     <df-messenger-chat 
-      chat-title="職業治療智能支援助理"
       placeholder-text="請輸入您的回覆或按麥克風說話...">
     </df-messenger-chat>
   </df-messenger>
 
-  <!-- 隱私提示 -->
+  <!-- 隱私提示（固定在最底，永遠可見） -->
   <div class="privacy-notice">
     本聊天機械人只用於出院準備檢查清單，資料只作今次用途。<br>
     如有任何擔心，請聯絡你的職業治療師。
@@ -80,7 +79,7 @@
       const dfMessenger = document.querySelector('df-messenger');
       dfMessenger.open();
 
-      // 強制設定標題 (最後保險)
+      // 強制顯示輸入框 + 多次嘗試修正標題
       setTimeout(() => {
         try {
           const titleEl = dfMessenger.shadowRoot.querySelector('.df-messenger-titlebar-title');
