@@ -22,11 +22,11 @@
       --df-messenger-message-user-color: #ffffff;
       --df-messenger-message-bot-background: #ffffff;
       
-      /* 大字型設定 — 適合長者（比原本大很多） */
-      --df-messenger-font-size: 20px;
-      --df-messenger-message-font-size: 20px;
-      --df-messenger-titlebar-title-font-size: 23px;
-      --df-messenger-titlebar-height: 65px;
+      /* 大字型設定 — 非常適合長者 */
+      --df-messenger-font-size: 21px;
+      --df-messenger-message-font-size: 21px;
+      --df-messenger-titlebar-title-font-size: 24px;
+      --df-messenger-titlebar-height: 68px;
     }
   </style>
 </head>
@@ -38,43 +38,34 @@
     language-code="zh-hk"
     max-query-length="-1"
     chat-title="職業治療智能支援助理"
+    intent="WELCOME"          <!-- 這一行最重要：自動觸發你的開啟訊息 -->
     expand>
-    <df-messenger-chat></df-messenger-chat>
+    <df-messenger-chat 
+      placeholder-text="請輸入您的回覆或按麥克風說話...">
+    </df-messenger-chat>
   </df-messenger>
 
   <script>
     window.addEventListener('dfMessengerLoaded', function () {
       const dfMessenger = document.querySelector('df-messenger');
-     
-      // 強制立即打開聊天窗
+      
+      // 強制打開聊天窗
       dfMessenger.open();
-     
-      // 自動顯示歡迎訊息（不用病人輸入任何東西）
-      setTimeout(() => {
-        dfMessenger.sendEvent('WELCOME');
-      }, 900);
-
-      // 調整輸入框字體大小（適合長者）
+      
+      // 額外保險：再觸發一次 WELCOME（如果有延遲）
       setTimeout(() => {
         try {
-          const chatElement = dfMessenger.shadowRoot.querySelector('df-messenger-chat');
-          if (chatElement) {
-            const userInput = chatElement.shadowRoot.querySelector('df-messenger-user-input');
-            if (userInput) {
-              const inputBox = userInput.shadowRoot.querySelector('input');
-              if (inputBox) {
-                inputBox.style.fontSize = '21px';
-                inputBox.placeholder = '請輸入您的回覆...';
-              }
-            }
-          }
-        } catch(e) {}
-      }, 1600);
+          dfMessenger.sendEvent('WELCOME');
+          console.log('✅ WELCOME event 已發送');
+        } catch(e) {
+          console.log('⚠️ 直接使用 intent 屬性已足夠');
+        }
+      }, 1200);
     });
   </script>
 
-  <!-- 隱私提示（放在最底） -->
-  <div style="text-align:center; margin-top:20px; font-size:15px; color:#64748b; padding:0 20px;">
+  <!-- 隱私提示（大字一點） -->
+  <div style="text-align:center; margin-top:20px; font-size:16px; color:#64748b; padding:0 20px;">
     本聊天機械人只用於出院準備檢查清單，資料只作今次用途。<br>
     如有任何擔心，請聯絡你的職業治療師。
   </div>
