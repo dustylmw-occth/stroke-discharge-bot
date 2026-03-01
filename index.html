@@ -5,11 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>職業治療智能支援助理</title>
   
-  <!-- Load Noto Sans HK for consistent Chinese display -->
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+HK:wght@400;500;700&display=swap" rel="stylesheet">
-  
-  <link rel="stylesheet" href="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/themes/df-messenger-default.css">
-  <script src="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/df-messenger.js"></script>
+  <!-- Force fresh load every time (cache busting) -->
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+HK:wght@400;500;700&display=swap&v=20260301" rel="stylesheet">
+  <link rel="stylesheet" href="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/themes/df-messenger-default.css?v=20260301">
+  <script src="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/df-messenger.js?v=20260301"></script>
   
   <style>
     body {
@@ -27,7 +26,7 @@
       flex: 1;
       width: 100%;
       
-      /* Senior-friendly big fonts */
+      /* 大字型 + 藍色標題欄 (適合長者) */
       --df-messenger-font-family: "Noto Sans HK", system-ui, sans-serif;
       --df-messenger-font-size: 21px;
       --df-messenger-message-font-size: 21px;
@@ -40,7 +39,6 @@
       --df-messenger-message-user-background: #3b82f6;
       --df-messenger-message-user-color: #ffffff;
       --df-messenger-message-bot-background: #ffffff;
-      --df-messenger-message-bot-font-color: #1f2937;
     }
     
     .privacy-notice {
@@ -62,15 +60,16 @@
     agent-id="5901c859-3fbf-4597-b4a3-6ccbdafea105"
     language-code="zh-hk"
     max-query-length="-1"
-    chat-title="職業治療智能支援助理"
     intent="WELCOME">
     
+    <!-- ✅ chat-title 必須放在這裡 (2026 新規則) -->
     <df-messenger-chat 
+      chat-title="職業治療智能支援助理"
       placeholder-text="請輸入您的回覆或按麥克風說話...">
     </df-messenger-chat>
   </df-messenger>
 
-  <!-- Privacy notice -->
+  <!-- 隱私提示 -->
   <div class="privacy-notice">
     本聊天機械人只用於出院準備檢查清單，資料只作今次用途。<br>
     如有任何擔心，請聯絡你的職業治療師。
@@ -79,14 +78,13 @@
   <script>
     window.addEventListener('dfMessengerLoaded', function () {
       const dfMessenger = document.querySelector('df-messenger');
-      
-      // Force open the chat
       dfMessenger.open();
-      
-      // Extra safety: trigger welcome again after load
+
+      // 強制設定標題 (最後保險)
       setTimeout(() => {
         try {
-          dfMessenger.sendEvent('WELCOME');
+          const titleEl = dfMessenger.shadowRoot.querySelector('.df-messenger-titlebar-title');
+          if (titleEl) titleEl.textContent = '職業治療智能支援助理';
         } catch(e) {}
       }, 800);
     });
