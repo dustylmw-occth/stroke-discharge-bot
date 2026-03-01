@@ -4,64 +4,94 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>職業治療智能支援助理</title>
+  
+  <!-- Load Noto Sans HK properly -->
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+HK:wght@400;500;700&display=swap" rel="stylesheet">
+  
   <link rel="stylesheet" href="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/themes/df-messenger-default.css">
   <script src="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/df-messenger.js"></script>
+  
   <style>
-    body { 
-      margin: 0; 
-      padding: 0; 
-      height: 100vh; 
-      background: #f8fafc; 
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      background: #f8fafc;
       font-family: "Noto Sans HK", system-ui, sans-serif;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
     }
+    
     df-messenger {
-      --df-messenger-font-color: #000;
+      flex: 1;
+      width: 100%;
+      height: 100%;
+      
+      /* Official CSS variables - large, senior-friendly */
       --df-messenger-font-family: "Noto Sans HK", system-ui, sans-serif;
-      --df-messenger-chat-background: #f0f4f8;
+      --df-messenger-font-size: 18px;
+      --df-messenger-message-font-size: 18px;
+      --df-messenger-font-color: #1f2937;
+      
+      --df-messenger-primary-color: #3b82f6;
+      --df-messenger-titlebar-background: #3b82f6;
+      --df-messenger-titlebar-font-color: #ffffff;
+      --df-messenger-titlebar-title-font-size: 20px;
+      
+      --df-messenger-chat-background: #f8fafc;
+      --df-messenger-message-bot-background: #ffffff;
+      --df-messenger-message-bot-font-color: #1f2937;
       --df-messenger-message-user-background: #3b82f6;
       --df-messenger-message-user-color: #ffffff;
-      --df-messenger-message-bot-background: #ffffff;
+      
+      --df-messenger-message-border-radius: 12px;
+      --df-messenger-message-spacing: 12px;
+      
+      /* Input area improvements */
+      --df-messenger-input-padding: 16px 20px;
+      --df-messenger-input-border-radius: 12px;
+    }
+    
+    .privacy-notice {
+      text-align: center;
+      padding: 16px 20px;
+      font-size: 15px;
+      line-height: 1.5;
+      color: #64748b;
+      background: #f1f5f9;
+      border-top: 1px solid #e2e8f0;
+      flex-shrink: 0;
     }
   </style>
 </head>
 <body>
   <df-messenger
-    location="asia-northeast1"
+    location="asia-southeast1"   <!-- Better for HK users -->
     project-id="studious-ethos-482608-a1"
     agent-id="5901c859-3fbf-4597-b4a3-6ccbdafea105"
     language-code="zh-hk"
     max-query-length="-1"
-    chat-title="職業治療智能支援助理"
-    expand> 
-    <df-messenger-chat></df-messenger-chat>
+    chat-title="職業治療智能支援助理">
+    
+    <!-- Always-open chat + senior-friendly placeholder -->
+    <df-messenger-chat
+      placeholder-text="請輸入您的回覆或按麥克風說話...">
+    </df-messenger-chat>
   </df-messenger>
-
-  <script>
-    window.addEventListener('dfMessengerLoaded', function () {
-      const dfMessenger = document.querySelector('df-messenger');
-      
-      // 強制立即打開聊天窗
-      dfMessenger.open();
-      
-      // 調整輸入框字體大小（適合長者）
-      const chatElement = dfMessenger.shadowRoot.querySelector('df-messenger-chat');
-      if (chatElement) {
-        const userInput = chatElement.shadowRoot.querySelector('df-messenger-user-input');
-        if (userInput) {
-          const inputBox = userInput.shadowRoot.querySelector('input');
-          if (inputBox) {
-            inputBox.style.fontSize = '18px';
-            inputBox.placeholder = '請輸入您的回覆...';
-          }
-        }
-      }
-    });
-  </script>
-
-  <!-- 隱私提示（放在最底） -->
-  <div style="text-align:center; margin-top:20px; font-size:14px; color:#64748b; padding:0 20px;">
+  
+  <!-- Privacy notice -->
+  <div class="privacy-notice">
     本聊天機械人只用於出院準備檢查清單，資料只作今次用途。<br>
     如有任何擔心，請聯絡你的職業治療師。
   </div>
+
+  <script>
+    // Optional - only for debugging or extra events
+    window.addEventListener('dfMessengerLoaded', function () {
+      console.log('✅ 職業治療智能支援助理 已載入');
+      // You can add custom events here if needed (e.g., analytics)
+    });
+  </script>
 </body>
 </html>
