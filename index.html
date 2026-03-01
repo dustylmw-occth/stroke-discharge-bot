@@ -21,6 +21,12 @@
       --df-messenger-message-user-background: #3b82f6;
       --df-messenger-message-user-color: #ffffff;
       --df-messenger-message-bot-background: #ffffff;
+      
+      /* 大字型設定 — 適合長者（比原本大很多） */
+      --df-messenger-font-size: 20px;
+      --df-messenger-message-font-size: 20px;
+      --df-messenger-titlebar-title-font-size: 23px;
+      --df-messenger-titlebar-height: 65px;
     }
   </style>
 </head>
@@ -35,6 +41,7 @@
     expand>
     <df-messenger-chat></df-messenger-chat>
   </df-messenger>
+
   <script>
     window.addEventListener('dfMessengerLoaded', function () {
       const dfMessenger = document.querySelector('df-messenger');
@@ -42,22 +49,32 @@
       // 強制立即打開聊天窗
       dfMessenger.open();
      
+      // 自動顯示歡迎訊息（不用病人輸入任何東西）
+      setTimeout(() => {
+        dfMessenger.sendEvent('WELCOME');
+      }, 900);
+
       // 調整輸入框字體大小（適合長者）
-      const chatElement = dfMessenger.shadowRoot.querySelector('df-messenger-chat');
-      if (chatElement) {
-        const userInput = chatElement.shadowRoot.querySelector('df-messenger-user-input');
-        if (userInput) {
-          const inputBox = userInput.shadowRoot.querySelector('input');
-          if (inputBox) {
-            inputBox.style.fontSize = '18px';
-            inputBox.placeholder = '請輸入您的回覆...';
+      setTimeout(() => {
+        try {
+          const chatElement = dfMessenger.shadowRoot.querySelector('df-messenger-chat');
+          if (chatElement) {
+            const userInput = chatElement.shadowRoot.querySelector('df-messenger-user-input');
+            if (userInput) {
+              const inputBox = userInput.shadowRoot.querySelector('input');
+              if (inputBox) {
+                inputBox.style.fontSize = '21px';
+                inputBox.placeholder = '請輸入您的回覆...';
+              }
+            }
           }
-        }
-      }
+        } catch(e) {}
+      }, 1600);
     });
   </script>
+
   <!-- 隱私提示（放在最底） -->
-  <div style="text-align:center; margin-top:20px; font-size:14px; color:#64748b; padding:0 20px;">
+  <div style="text-align:center; margin-top:20px; font-size:15px; color:#64748b; padding:0 20px;">
     本聊天機械人只用於出院準備檢查清單，資料只作今次用途。<br>
     如有任何擔心，請聯絡你的職業治療師。
   </div>
