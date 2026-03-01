@@ -5,10 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>職業治療智能支援助理</title>
   
-  <!-- 強制清快取（每次更新都會生效） -->
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+HK:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/themes/df-messenger-default.css?v=20260302">
-  <script src="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/df-messenger.js?v=20260302"></script>
+  <!-- Force fresh load every time (cache busting) -->
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+HK:wght@400;500;700&display=swap&v=20260301" rel="stylesheet">
+  <link rel="stylesheet" href="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/themes/df-messenger-default.css?v=20260301">
+  <script src="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/df-messenger.js?v=20260301"></script>
   
   <style>
     body {
@@ -17,19 +17,21 @@
       height: 100vh;
       background: #f8fafc;
       font-family: "Noto Sans HK", system-ui, sans-serif;
+      display: flex;
+      flex-direction: column;
       overflow: hidden;
-      position: relative;
     }
     
     df-messenger {
+      flex: 1;
       width: 100%;
-      height: calc(100vh - 125px);   /* 留出足夠空間給輸入框 + 隱私提示 */
       
-      /* 大字型 + 長者友好 */
+      /* 大字型 + 藍色標題欄 (適合長者) */
+      --df-messenger-font-family: "Noto Sans HK", system-ui, sans-serif;
       --df-messenger-font-size: 21px;
       --df-messenger-message-font-size: 21px;
       --df-messenger-titlebar-title-font-size: 24px;
-      --df-messenger-titlebar-height: 70px;
+      --df-messenger-titlebar-height: 68px;
       --df-messenger-titlebar-background: #3b82f6;
       --df-messenger-titlebar-font-color: #ffffff;
       
@@ -40,18 +42,14 @@
     }
     
     .privacy-notice {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      padding: 14px 20px;
-      font-size: 15px;
+      text-align: center;
+      padding: 16px 20px;
+      font-size: 16px;
       line-height: 1.5;
       color: #64748b;
       background: #f1f5f9;
       border-top: 1px solid #e2e8f0;
-      text-align: center;
-      z-index: 9999;
+      flex-shrink: 0;
     }
   </style>
 </head>
@@ -64,7 +62,7 @@
     max-query-length="-1"
     intent="WELCOME">
     
-    <!-- 標題放在這裡（官方推薦位置） -->
+    <!-- ✅ chat-title 必須放在這裡 (2026 新規則) -->
     <df-messenger-chat 
       chat-title="職業治療智能支援助理"
       placeholder-text="請輸入您的回覆或按麥克風說話...">
@@ -82,31 +80,13 @@
       const dfMessenger = document.querySelector('df-messenger');
       dfMessenger.open();
 
-      // 最激進的標題強制（5 次執行 + 持續監聽）
-      function forceTitle() {
+      // 強制設定標題 (最後保險)
+      setTimeout(() => {
         try {
-          // 方法1：直接改屬性
-          const chatEl = dfMessenger.querySelector('df-messenger-chat');
-          if (chatEl) chatEl.setAttribute('chat-title', '職業治療智能支援助理');
-
-          // 方法2：直接改 DOM 文字
-          const titleEl = dfMessenger.shadowRoot.querySelector('.df-messenger-titlebar-title, .title, h1');
+          const titleEl = dfMessenger.shadowRoot.querySelector('.df-messenger-titlebar-title');
           if (titleEl) titleEl.textContent = '職業治療智能支援助理';
         } catch(e) {}
-      }
-
-      forceTitle();
-      setTimeout(forceTitle, 400);
-      setTimeout(forceTitle, 900);
-      setTimeout(forceTitle, 1600);
-      setTimeout(forceTitle, 2800);
-      setTimeout(forceTitle, 4500);
-
-      // 持續監聽任何變化
-      const observer = new MutationObserver(forceTitle);
-      if (dfMessenger.shadowRoot) {
-        observer.observe(dfMessenger.shadowRoot, { childList: true, subtree: true });
-      }
+      }, 800);
     });
   </script>
 </body>
